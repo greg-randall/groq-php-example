@@ -11,8 +11,12 @@
   
   $prompt = "What's the best way to cook a hotdog?";
   
-  echo "<h2>Original Prompt</h2>
-            <pre>$prompt</pre><hr><hr><hr>";
+  echo "<div style=\"margin-left:2%;width:40%;\">
+        <h2>Original Prompt</h2>
+        <pre>$prompt</pre>
+        <hr>
+        <hr>
+        <hr>";
   
   foreach ( $models as $model ) {
       $groq_result = groq_call( $prompt, $model, 0.5, $groq_key ); //returns an array that we converted from a json
@@ -21,8 +25,9 @@
       $cost = groq_cost( $groq_result ); // cost is in dollars 
       
       echo "<h2>$model Response</h2>
-                <pre>$groq_reply</pre>
-                <p><strong>Cost: " . round( $cost * 100, 3 ) . "&cent;</p>" . // convert to cents and round to 3 decimal places
+                ". str_replace("\n","<br>", $groq_reply) . "
+                <p><strong>Cost: " . round( $cost * 100, 3 ) . "&cent;</strong></p>" . // convert to cents and round to 3 decimal places
           "<hr><br><br>";
   }
+  echo "</div>";
 ?>
